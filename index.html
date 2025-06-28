@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dilan ile Kaç Gündür Tanışıyoruz?</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #1c1c1c;
+      font-family: 'Arial', sans-serif;
+      color: #ffffff;
+    }
+
+    .container {
+      text-align: center;
+      border: 2px solid #4caf50;
+      border-radius: 20px;
+      padding: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      font-size: 2rem;
+      color: #4caf50;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 10px rgba(76, 175, 80, 0.8);
+    }
+
+    #counter {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-top: 20px;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 5px rgba(255, 255, 255, 0.5);
+    }
+
+    .time-unit {
+      display: inline-block;
+      margin: 0 10px;
+      text-align: center;
+    }
+
+    .value {
+      font-size: 3rem;
+      font-weight: bold;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .label {
+      font-size: 1rem;
+      text-transform: uppercase;
+    }
+
+    /* Gün Renkleri */
+    #days {
+      color: #ff5722; /* Turuncu */
+    }
+    #days ~ .label {
+      color: #ff5722;
+    }
+
+    /* Saat Renkleri */
+    #hours {
+      color: #03a9f4; /* Mavi */
+    }
+    #hours ~ .label {
+      color: #03a9f4;
+    }
+
+    /* Dakika Renkleri */
+    #minutes {
+      color: #ffeb3b; /* Sarı */
+    }
+    #minutes ~ .label {
+      color: #ffeb3b;
+    }
+
+    /* Saniye Renkleri */
+    #seconds {
+      color: #e91e63; /* Pembe */
+    }
+    #seconds ~ .label {
+      color: #e91e63;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>♥️sevgilim♥️ ile Kaç Gündür Tanışıyoruz?</h1>
+    <div id="counter">
+      <div class="time-unit">
+        <div class="value" id="days">0</div>
+        <div class="label">Gün</div>
+      </div>
+      <div class="time-unit">
+        <div class="value" id="hours">0</div>
+        <div class="label">Saat</div>
+      </div>
+      <div class="time-unit">
+        <div class="value" id="minutes">0</div>
+        <div class="label">Dakika</div>
+      </div>
+      <div class="time-unit">
+        <div class="value" id="seconds">0</div>
+        <div class="label">Saniye</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function updateTime() {
+      const startDate = new Date("2023-06-21T00:00:00"); // GÜNCELLENDİ: Tanışma tarihi
+      const now = new Date();
+      const difference = now - startDate;
+
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((difference / (1000 * 60)) % 60);
+      const seconds = Math.floor((difference / 1000) % 60);
+
+      document.getElementById("days").textContent = days;
+      document.getElementById("hours").textContent = hours;
+      document.getElementById("minutes").textContent = minutes;
+      document.getElementById("seconds").textContent = seconds;
+    }
+
+    updateTime(); // Hemen çalıştır
+    setInterval(updateTime, 1000); // Her saniye güncelle
+  </script>
+</body>
+</html>
