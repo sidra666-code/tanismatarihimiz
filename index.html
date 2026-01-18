@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +15,7 @@
       background: #1c1c1c;
       font-family: 'Arial', sans-serif;
       color: #ffffff;
+      overflow: hidden;
     }
 
     .container {
@@ -59,41 +60,58 @@
     }
 
     /* Gün Renkleri */
-    #days {
-      color: #ff5722; /* Turuncu */
-    }
-    #days ~ .label {
-      color: #ff5722;
-    }
+    #days { color: #ff5722; }
+    #days ~ .label { color: #ff5722; }
 
     /* Saat Renkleri */
-    #hours {
-      color: #03a9f4; /* Mavi */
-    }
-    #hours ~ .label {
-      color: #03a9f4;
-    }
+    #hours { color: #03a9f4; }
+    #hours ~ .label { color: #03a9f4; }
 
     /* Dakika Renkleri */
-    #minutes {
-      color: #ffeb3b; /* Sarı */
-    }
-    #minutes ~ .label {
-      color: #ffeb3b;
-    }
+    #minutes { color: #ffeb3b; }
+    #minutes ~ .label { color: #ffeb3b; }
 
     /* Saniye Renkleri */
-    #seconds {
-      color: #e91e63; /* Pembe */
+    #seconds { color: #e91e63; }
+    #seconds ~ .label { color: #e91e63; }
+
+    /* Kutlama Mesajı */
+    #celebration {
+      display: none;
+      margin-top: 30px;
+      font-size: 1.8rem;
+      color: gold;
+      text-shadow: 0 0 10px white, 0 0 20px gold;
+      font-weight: bold;
+      animation: glow 1s infinite alternate;
     }
-    #seconds ~ .label {
-      color: #e91e63;
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px white, 0 0 20px gold; }
+      to { text-shadow: 0 0 20px gold, 0 0 30px white; }
+    }
+
+    /* Konfeti Efekti */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background-color: red;
+      top: -10px;
+      animation: fall linear forwards;
+      z-index: 9999;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(360deg);
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>♥️sevgilim♥️ ile Kaç Gündür Tanışıyoruz?</h1>
+    <h1>♥️AŞKİMMM♥️ ile Kaç Gündür Tanışıyoruz?</h1>
     <div id="counter">
       <div class="time-unit">
         <div class="value" id="days">0</div>
@@ -112,11 +130,15 @@
         <div class="label">Saniye</div>
       </div>
     </div>
+
+    <div id="celebration">🎉 Yıl Dönümümüz Kutlu Olsun Aşkım! 🎉</div>
   </div>
 
   <script>
+    let confettiInterval;
+
     function updateTime() {
-      const startDate = new Date("2023-06-21T00:00:00"); // GÜNCELLENDİ: Tanışma tarihi
+      const startDate = new Date("2024-09-26T11:00:00");
       const now = new Date();
       const difference = now - startDate;
 
@@ -129,10 +151,39 @@
       document.getElementById("hours").textContent = hours;
       document.getElementById("minutes").textContent = minutes;
       document.getElementById("seconds").textContent = seconds;
+
+      // Eğer tam yıl dönümü günü ise
+      if (days % 365 === 0 && days > 0) {
+        document.getElementById("celebration").style.display = "block";
+        if (!confettiInterval) {
+          confettiInterval = setInterval(startConfetti, 1000); // Her saniye yeni konfeti yağsın
+        }
+      } else {
+        document.getElementById("celebration").style.display = "none";
+        clearInterval(confettiInterval);
+        confettiInterval = null;
+      }
     }
 
-    updateTime(); // Hemen çalıştır
-    setInterval(updateTime, 1000); // Her saniye güncelle
+    function startConfetti() {
+      for (let i = 0; i < 20; i++) {
+        const confetti = document.createElement("div");
+        confetti.classList.add("confetti");
+        confetti.style.left = Math.random() * window.innerWidth + "px";
+        confetti.style.backgroundColor = getRandomColor();
+        confetti.style.animationDuration = (Math.random() * 3 + 2) + "s";
+        document.body.appendChild(confetti);
+
+        setTimeout(() => confetti.remove(), 5000);
+      }
+    }
+
+    function getRandomColor() {
+      const colors = ["#ff5722", "#03a9f4", "#ffeb3b", "#e91e63", "#4caf50", "gold", "white"];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    setInterval(updateTime, 1000);
   </script>
 </body>
 </html>
